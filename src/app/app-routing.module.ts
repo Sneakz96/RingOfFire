@@ -1,7 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { StartScreenComponent } from './start-screen/start-screen.component';
+import { GameComponent } from './game/game.component';
+import { EndScreenComponent } from './end-screen/end-screen.component';
+
+const routes: Routes = [
+  { path:'', component: StartScreenComponent},
+  { path:'game', component: GameComponent},
+  { path:'', component: EndScreenComponent},
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
