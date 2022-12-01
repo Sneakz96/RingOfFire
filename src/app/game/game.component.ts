@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
+import { AngularFirestore} from '@angular/fire/compat/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -14,10 +16,16 @@ export class GameComponent implements OnInit {
   currentCard?: string;
   'game': Game;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(private firestore: AngularFirestore, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.newGame();
+    this.firestore
+      .collection("games")
+      .valueChanges()
+      .subscribe((game)=>{
+        console.log('game update', game);
+      });
   }
 
   newGame() {
@@ -28,7 +36,7 @@ export class GameComponent implements OnInit {
     if (!this.pickCardAnimation) {
       this.pickCardAnimation = true;
       this.currentCard = this.game.stack.pop();
-      
+
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length
 
@@ -43,8 +51,8 @@ export class GameComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogAddPlayerComponent);
 
     dialogRef.afterClosed().subscribe((name: string) => {
-      if(name && name.length > 0) {
-      this.game.players.push(name);
+      if (name && name.length > 0) {
+        this.game.players.push(name);
       }
     });
   }

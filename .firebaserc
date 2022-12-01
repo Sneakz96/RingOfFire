@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ringoffire-d90e2": {
+      "hosting": {
+        "ringoffire": [
+          "ringoffire-d90e2"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ringoffire-d90e2"
+  }
+}
